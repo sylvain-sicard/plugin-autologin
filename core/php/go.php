@@ -59,8 +59,9 @@ if (isset($queryparam['id'])) {
     $hashRegisteredDevice = $autologin->getHash();
     $hashregisterdevice = $autologin->getHash();
     $sessionid = $autologin->getSessionId();
+    $autoredirect = $autologin->getAutoredirect();
 
-    if ($allowedIP != $ip) {
+    if ($allowedIP != '0.0.0.0' && $allowedIP != $ip) {
         echo getErrorHTML("IP is not allowed.");
         log::add('autologin', 'error', __('This IP is not allowed ', __FILE__) . '(authorized: ' . $allowedIP . ' => device ip: ' . $ip . ')');
         die();
@@ -107,7 +108,11 @@ if (isset($queryparam['id'])) {
 
     // if session already ok
     if (isset($_COOKIE['sess_id']) == $sessionid && isset($_COOKIE['registerDevice']) == $hashRegisteredDevice && !isset($queryparam['force'])) {
+      if($autoredirect){
         header("Location: $url");
+      }else{
+        echo getHTML($url);
+      }
     } else {  // else generate session and cookies
         $registerDevice[sha512($rdk)]['datetime'] = date('Y-m-d H:i:s');
         $user->setOptions('registerDevice', $registerDevice);
@@ -120,12 +125,14 @@ if (isset($queryparam['id'])) {
         @session_write_close();
 
         $cookieTimeout = time() + 365 * 24 * 3600;
-        header("refresh: 2; url=$url");
+        if($autoredirect){
+          header("refresh: 2; url=$url");
+        }
         setcookie('sess_id', $sessionid, $cookieTimeout, "/", '', false, true);
         setcookie('registerDevice', $hashRegisteredDevice, $cookieTimeout, "/", '', false, true);
         setcookie('jeedom_token', ajax::getToken(), $cookieTimeout, "/", '', false, true);
 
-        echo getHTML();
+        echo getHTML($url);
     }
     die();
 } else {
@@ -148,7 +155,7 @@ function getErrorHTML($error) {
     return $html;
 }
 
-function getHTML() {
+function getHTML($url) {
     $html  = '';
     $html .= '<br><br><br><center>';
     $html .= '<img src="../../../../core/img/logo-jeedom-grand-nom-couleur.svg" width="200"><br><br><br><br>';
@@ -157,6 +164,7 @@ function getHTML() {
     $html .= '<span style="font-family: Verdana, Helvetica, sans-serif;font-size: 20px;">';
     $html .= __('Authentification en cours...', __FILE__);
     $html .= '</span>';
+    $html .= '<p><a href="'.$url.'">'.$url.'</a></p>';
     $html .= '</center><br>';
     return $html;
 }
