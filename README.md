@@ -16,7 +16,7 @@ Plugin [user documentation (fr)](docs/fr_FR/index.md).
 - Add plugin from github source:
 
   - logical id: `autologin`
-  - user: `Mips2648`
+  - user: `sylvain-sicard`
   - repo: `plugin-autologin`
   - branch: `master`
 
