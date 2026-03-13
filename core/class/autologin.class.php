@@ -27,7 +27,7 @@ class autologin extends eqLogic {
         $this->setConfiguration('redirecturl', 'index.php');
         $this->setConfiguration('ip', getClientIp());
         $this->setConfiguration('sessionid', uniqid());
-
+		$this->setConfiguration('autoredirect', 1);
         $this->setIsEnable(1);
     }
 
@@ -137,6 +137,10 @@ class autologin extends eqLogic {
 
     public function getIP() {
         return $this->getConfiguration('ip', '');
+    }
+  
+    public function getAutoredirect() {
+      return $this->getConfiguration('autoredirect', '');
     }
 }
 
