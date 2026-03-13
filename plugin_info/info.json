@@ -10,13 +10,13 @@
 		"pt_PT": "Início de sessão automático do utilizador com base no IP"
 	},
 	"licence": "AGPL",
-	"author": "Mips",
+	"author": "Sylvain Sicard",
 	"hasOwnDeamon": false,
 	"hasDependency": false,
 	"require": "4.4",
 	"category": "programming",
-	"changelog": "https://github.com/Mips2648/plugin-autologin/blob/develop/docs/#language#/changelog.md",
-	"documentation": "https://github.com/Mips2648/plugin-autologin/blob/develop/docs/#language#/index.md",
+	"changelog": "https://github.com/sylvain-sicard/plugin-autologin/blob/develop/docs/#language#/changelog.md",
+	"documentation": "https://github.com/sylvain-sicard/plugin-autologin/blob/develop/docs/#language#/index.md",
 	"link": {
 		"forum": "https://community.jeedom.com/tag/plugin-autologin",
 		"video": ""
